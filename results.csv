@@ -1,0 +1,8 @@
+Series Description,Label,Confidence,Decision,Files
+Pancreas,CT,0.99,physics,1
+Brain      STIR GR 512  TRA    GraSE 4415      64,FLAIR,0.9,physics,1
+CBU_DTI_64D_1A,T2,0.85,physics,8
+"Coronal two-phase IV contrast fat suppressed; temp posn, stacks",T1,0.6,llm,2
+RESTING_STATE_Yerkes,unknown,0.0,llm,2
+CV_map_neuro_qT1_FA12nTI128,T1,0.85,physics,2
+<MIP Range>,T1,0.85,physics,2
