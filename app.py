@@ -99,6 +99,17 @@ class MainWindow(QMainWindow):
         output_layout.addWidget(output_btn)
         layout.addLayout(output_layout)
 
+        # Study name input
+        study_layout = QHBoxLayout()
+        study_label = QLabel("Study Name:")
+        study_label.setFixedWidth(90)
+        study_layout.addWidget(study_label)
+        self.study_name_input = __import__('PyQt6.QtWidgets', fromlist=['QLineEdit']).QLineEdit()
+        self.study_name_input.setPlaceholderText("e.g. Study_001 (optional)")
+        self.study_name_input.setStyleSheet("padding: 8px; border: 1px solid #ccc; border-radius: 4px;")
+        study_layout.addWidget(self.study_name_input)
+        layout.addLayout(study_layout)
+
         # Run button
         self.run_btn = QPushButton("Run Classification")
         self.run_btn.setFixedHeight(44)
@@ -160,7 +171,13 @@ class MainWindow(QMainWindow):
         self.progress_bar.setValue(0)
         self.table.setRowCount(0)
 
-        self.worker = WorkerThread(self.folder_path, self.output_folder)
+        study_name = self.study_name_input.text().strip()
+        if study_name:
+            import os
+            final_output = os.path.join(self.output_folder, study_name)
+        else:
+            final_output = self.output_folder
+        self.worker = WorkerThread(self.folder_path, final_output)
         self.worker.progress.connect(self.progress_bar.setValue)
         self.worker.result.connect(self.add_result_row)
         self.worker.status.connect(self.status_label.setText)
