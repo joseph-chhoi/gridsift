@@ -1,0 +1,86 @@
+name: Build ScanSort
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller pydicom PyQt6 llama-cpp-python
+      - name: Build
+        run: |
+          python -m PyInstaller --onedir --windowed --name "ScanSort" --add-binary "C:\hostedtoolcache\windows\Python\3.11*\x64\Lib\site-packages\llama_cpp\lib\*.dll;llama_cpp\lib" app.py
+      - name: Zip
+        run: |
+          Compress-Archive -Path dist\ScanSort -DestinationPath ScanSort-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanSort-Windows
+          path: ScanSort-Windows.zip
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller pydicom PyQt6 llama-cpp-python
+      - name: Build
+        run: |
+          python -m PyInstaller --onedir --windowed --name "ScanSort" app.py
+      - name: Zip
+        run: |
+          zip -r ScanSort-Mac.zip dist/ScanSort
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanSort-Mac
+          path: ScanSort-Mac.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller pydicom PyQt6 llama-cpp-python
+          sudo apt-get install -y libxcb-xinerama0 libxcb1 libx11-6
+      - name: Build
+        run: |
+          python -m PyInstaller --onedir --windowed --name "ScanSort" app.py
+      - name: Zip
+        run: |
+          zip -r ScanSort-Linux.zip dist/ScanSort
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ScanSort-Linux
+          path: ScanSort-Linux.zip
+
+  release:
+    needs: [build-windows, build-mac, build-linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ScanSort-Windows/ScanSort-Windows.zip
+            ScanSort-Mac/ScanSort-Mac.zip
+            ScanSort-Linux/ScanSort-Linux.zip
