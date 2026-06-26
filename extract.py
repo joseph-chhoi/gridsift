@@ -1,19 +1,49 @@
+import os
+import sys
 import pydicom
 from llama_cpp import Llama
 
+def get_model_path():
+    if getattr(sys, 'frozen', False):
+        base_dir = os.path.dirname(sys.executable)
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_dir, "Llama-3.2-3B-Instruct-Q4_K_M.gguf")
+
 llm = Llama(
-    model_path=r"C:\Users\Joseph Choi\Documents\dicom_classifier\Phi-3-mini-4k-instruct-q4.gguf",
-    n_ctx=512,
+    model_path=get_model_path(),
+    n_ctx=2048,
     verbose=False
 )
 
+def normalize_with_rules(series_description):
+    if not series_description:
+        return "unknown"
+    text = series_description.lower()
+    if any(k in text for k in ["flair", "stir", "fluid"]):
+        return "FLAIR"
+    if any(k in text for k in ["dwi", "diffusion", "dti", "adc"]):
+        return "DWI"
+    if any(k in text for k in ["dce", "perfusion", "dynamic contrast", "contrast"]):
+        return "DCE"
+    if any(k in text for k in ["t1", "mprage", "spgr", "tfe", "bravo", "vibe"]):
+        return "T1"
+    if any(k in text for k in ["t2"]):
+        return "T2"
+    if any(k in text for k in ["localizer", "localiser", "scout", "survey", "loc"]):
+        return "localizer"
+    return "unknown"
+
 def normalize_with_llm(series_description):
     truncated = series_description[:100] if series_description else ""
-    prompt = f"""Classify this MRI series into exactly one label: T1, T2, FLAIR, DWI, DCE, localizer, unknown.
-Series: {truncated}
-Label:"""
-    
-    output = llm(prompt, max_tokens=10, stop=["\n"])
+    prompt = f"""<|start_header_id|>system<|end_header_id|>
+You are a medical imaging classifier. Classify MRI series descriptions into exactly one of these labels: T1, T2, FLAIR, DWI, DCE, localizer, unknown.
+DCE includes any contrast-enhanced, dynamic, or perfusion sequences.
+DWI includes diffusion, DTI, ADC, and any sequence with DIFFUSION in the name.
+Respond with only the label, nothing else.<|eot_id|><|start_header_id|>user<|end_header_id|>
+Series: {truncated}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+"""
+    output = llm(prompt, max_tokens=10, stop=["<|eot_id|>", "\n"])
     label = output["choices"][0]["text"].strip()
     if label not in ["T1", "T2", "FLAIR", "DWI", "DCE", "localizer", "unknown"]:
         return "unknown"
@@ -63,17 +93,19 @@ def physics_filter(meta):
 def classify_series(filepath):
     meta = extract_metadata(filepath)
     label, confidence = physics_filter(meta)
-    
+
     if label == "ambiguous":
-        label = normalize_with_llm(meta["series_description"] or "")
+        label = normalize_with_rules(meta["series_description"] or "")
+        if label == "unknown":
+            label = normalize_with_llm(meta["series_description"] or "")
         confidence = 0.6 if label != "unknown" else 0.0
-    
+
     return {
         "series_uid": meta["series_uid"],
         "series_description": meta["series_description"],
         "label": label,
         "confidence": confidence,
-        "decision_path": "physics" if confidence >= 0.75 else "llm"
+        "decision_path": "physics" if confidence >= 0.75 else "rules/llm"
     }
 
 if __name__ == "__main__":
@@ -83,33 +115,16 @@ if __name__ == "__main__":
     print(f"Label: {label}")
     print(f"Confidence: {confidence}")
 
-    ambiguous_meta = {
-        "series_uid": "1.2.3.4.5",
-        "modality": "MR",
-        "series_description": "flair ax 3",
-        "echo_time": 0.0,
-        "repetition_time": 0.0,
-        "flip_angle": 0.0,
-        "inversion_time": 0.0,
-        "slice_thickness": None,
-        "field_strength": None,
-    }
+    print("\nRule-based normalization test:")
+    print(f"flair ax 3: {normalize_with_rules('flair ax 3')}")
+    print(f"sag t1 mprage: {normalize_with_rules('sag t1 mprage')}")
+    print(f"AX DIFFUSION: {normalize_with_rules('AX DIFFUSION')}")
+    print(f"survey: {normalize_with_rules('survey')}")
+    print(f"Coronal two-phase IV contrast: {normalize_with_rules('Coronal two-phase IV contrast fat suppressed; temp posn, stacks')}")
 
-    label, confidence = physics_filter(ambiguous_meta)
-    print(f"\nAmbiguous test:")
-    print(f"Series: {ambiguous_meta['series_description']}")
-    print(f"Label: {label}")
-    print(f"Confidence: {confidence}")
-
-    print("\nLLM normalization test:")
-    result = normalize_with_llm("flair ax 3")
-    print(f"Input: 'flair ax 3'")
-    print(f"Output: {result}")
-
-    print(normalize_with_llm("sag t1 mprage"))
-    print(normalize_with_llm("AX DIFFUSION"))
-    print(normalize_with_llm("survey"))
-    print(normalize_with_llm("Coronal two-phase IV contrast fat suppressed; temp posn, stacks"))
+    print("\nLLM normalization test (only for unknown cases):")
+    print(f"RESTING_STATE_Yerkes: {normalize_with_llm('RESTING_STATE_Yerkes')}")
+    print(f"CV_map_neuro_qT1_FA12nTI128: {normalize_with_llm('CV_map_neuro_qT1_FA12nTI128')}")
 
     print("\nFull pipeline test:")
     result = classify_series(r"C:\Users\Joseph Choi\Downloads\ct-pancreas-pancreas-ct-instance.dcm")
