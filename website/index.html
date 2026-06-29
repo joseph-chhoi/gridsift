@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScanSort — DICOM Series Classifier</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #1A5FA8;
+    --blue-light: #4A9FE8;
+    --blue-dim: #0d3d6e;
+    --bg: #0a0f1a;
+    --bg2: #111827;
+    --bg3: #1a2235;
+    --text: #e8edf5;
+    --text-muted: #7a8ba8;
+    --border: #1e2d45;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(10, 15, 26, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo svg { width: 36px; height: 36px; }
+
+  .nav-logo-text {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo-text span:first-child { color: var(--blue); }
+  .nav-logo-text span:last-child { color: var(--blue-light); }
+
+  .nav-tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  .nav-tab {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 15px;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .nav-tab:hover { color: var(--text); background: var(--bg3); }
+  .nav-tab.active { color: var(--blue-light); background: rgba(74, 159, 232, 0.1); }
+
+  /* PAGES */
+  .page { display: none; padding-top: 64px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* HOME PAGE */
+  .hero {
+    padding: 100px 40px 80px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(74, 159, 232, 0.1);
+    border: 1px solid rgba(74, 159, 232, 0.3);
+    color: var(--blue-light);
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 32px;
+    letter-spacing: 0.5px;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 .blue { color: var(--blue-light); }
+
+  .hero p {
+    font-size: 19px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 660px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--blue);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+  }
+
+  .hero-cta:hover { background: var(--blue-light); }
+
+  /* WHAT IS SCANSORT */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--blue-light);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section h2 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+
+  .section p {
+    font-size: 17px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+
+  /* BENEFITS GRID */
+  .benefits {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .benefit-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+  }
+
+  .benefit-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(26, 95, 168, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 22px;
+  }
+
+  .benefit-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .benefit-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* BEFORE / AFTER */
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .ba-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .ba-card.before { border-top: 3px solid #e05252; }
+  .ba-card.after { border-top: 3px solid #4caf7d; }
+
+  .ba-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .ba-card.before .ba-label { color: #e05252; }
+  .ba-card.after .ba-label { color: #4caf7d; }
+
+  .ba-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  .ba-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .before .ba-dot { background: #e05252; }
+  .after .ba-dot { background: #4caf7d; }
+
+  /* DOWNLOADS PAGE */
+  .downloads-hero {
+    padding: 80px 40px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .downloads-hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .downloads-hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .model-note {
+    display: inline-block;
+    background: rgba(255, 193, 7, 0.08);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  .download-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 900px;
+    margin: 48px auto;
+    padding: 0 40px;
+  }
+
+  .dl-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 28px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .dl-card:hover { border-color: var(--blue); }
+
+  .dl-os-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .dl-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .dl-card p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .dl-btn {
+    display: block;
+    background: var(--blue);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .dl-btn:hover { background: var(--blue-light); }
+
+  .dl-version {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 12px;
+  }
+
+  .model-section {
+    max-width: 900px;
+    margin: 0 auto 80px;
+    padding: 0 40px;
+  }
+
+  .model-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px;
+  }
+
+  .model-box h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .model-box p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .model-btn {
+    display: inline-block;
+    background: rgba(74, 159, 232, 0.1);
+    border: 1px solid rgba(74, 159, 232, 0.3);
+    color: var(--blue-light);
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .model-btn:hover { background: rgba(74, 159, 232, 0.2); }
+
+  /* INSTRUCTIONS PAGE */
+  .instructions-hero {
+    padding: 80px 40px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .instructions-hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
+  }
+
+  .instructions-hero p {
+    font-size: 17px;
+    color: var(--text-muted);
+  }
+
+  .steps {
+    max-width: 760px;
+    margin: 60px auto 80px;
+    padding: 0 40px;
+  }
+
+  .step {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: 52px;
+    bottom: -32px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .step-num {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .step-content { flex: 1; }
+
+  .step-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    padding-top: 8px;
+  }
+
+  .step-content p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .step-visual {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--blue-light);
+    margin-top: 12px;
+  }
+
+  .step-visual .comment { color: var(--text-muted); }
+
+  .folder-tree {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 2;
+    margin-top: 12px;
+  }
+
+  .folder-tree .folder { color: var(--blue-light); }
+  .folder-tree .file { color: var(--text-muted); }
+  .folder-tree .flagged { color: #e05252; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+
+  footer a { color: var(--blue-light); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 768px) {
+    .benefits { grid-template-columns: 1fr; }
+    .before-after { grid-template-columns: 1fr; }
+    .download-cards { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    nav { padding: 0 20px; }
+    .nav-tab { padding: 8px 12px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="#1A5FA8"/>
+      <rect x="11" y="12" width="22" height="16" rx="2" fill="none" stroke="white" stroke-width="1.5" opacity="0.9"/>
+      <line x1="11" y1="17" x2="33" y2="17" stroke="white" stroke-width="1" opacity="0.5"/>
+      <line x1="11" y1="22" x2="33" y2="22" stroke="white" stroke-width="1" opacity="0.5"/>
+      <rect x="13" y="13.5" width="7" height="3" rx="1" fill="#4A9FE8" opacity="0.9"/>
+      <rect x="22" y="13.5" width="9" height="3" rx="1" fill="#4A9FE8" opacity="0.6"/>
+      <rect x="13" y="18.5" width="11" height="3" rx="1" fill="#4A9FE8" opacity="0.9"/>
+      <rect x="26" y="18.5" width="5" height="3" rx="1" fill="#4A9FE8" opacity="0.6"/>
+      <line x1="22" y1="28" x2="22" y2="36" stroke="white" stroke-width="1.5" opacity="0.8"/>
+      <polygon points="22,38 19,34 25,34" fill="white" opacity="0.8"/>
+    </svg>
+    <div class="nav-logo-text">
+      <span>Scan</span><span>Sort</span>
+    </div>
+  </a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home')">Home</button>
+    <button class="nav-tab" onclick="showPage('downloads')">Downloads</button>
+    <button class="nav-tab" onclick="showPage('instructions')">Instructions</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+
+  <div class="hero">
+    <div class="hero-badge">Free · Open Source · Runs Locally</div>
+    <h1>Sort your DICOM files<br>in <span class="blue">minutes, not days</span></h1>
+    <p>ScanSort automatically classifies raw MRI series from any hospital export — T1, T2, FLAIR, DWI, DCE — and sorts them into labeled folders, ready for research.</p>
+    <button class="hero-cta" onclick="showPage('downloads')">
+      Download ScanSort
+    </button>
+  </div>
+
+  <div class="section">
+    <div class="section-label">What is ScanSort</div>
+    <h2>Built for medical imaging researchers</h2>
+    <p>When hospitals export imaging data, researchers receive hundreds of mixed, unlabeled DICOM files with inconsistent naming conventions that vary by institution, scanner vendor, and country. Before any actual research can begin, someone has to manually sort through all of it — which takes days on large datasets.</p>
+    <p>ScanSort solves this with a two-stage pipeline: a physics-based filter that uses vendor-agnostic MRI acquisition parameters (TE, TR, flip angle, inversion time) to classify unambiguous series, and a local LLM that handles the rest. Uncertain series are explicitly flagged for human review — never silently mislabeled.</p>
+
+    <div class="benefits">
+      <div class="benefit-card">
+        <div class="benefit-icon">🔒</div>
+        <h3>Fully local</h3>
+        <p>No data leaves your machine. No API keys, no internet connection required, no cost per use. Safe for sensitive clinical data.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">⚡</div>
+        <h3>Physics-first</h3>
+        <p>Uses vendor-agnostic numeric MRI parameters as primary signal — works regardless of how the hospital named the series.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🚩</div>
+        <h3>Uncertainty flagging</h3>
+        <p>Uncertain series are flagged for human review, never silently misclassified. Every decision is logged and auditable.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📁</div>
+        <h3>Sorted output</h3>
+        <p>Files are copied into labeled subfolders — T1, T2, FLAIR, DWI, DCE, flagged_for_review — ready for your pipeline.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📊</div>
+        <h3>CSV export</h3>
+        <p>Every classification is logged with confidence score and decision path. Export to CSV for full reproducibility.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🌐</div>
+        <h3>Multi-site ready</h3>
+        <p>Works across institutions, scanner vendors, and naming conventions. No retraining or configuration needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Before vs After</div>
+    <h2>What changes for researchers</h2>
+
+    <div class="before-after">
+      <div class="ba-card before">
+        <div class="ba-label">Before ScanSort</div>
+        <div class="ba-item"><div class="ba-dot"></div>Manually sorting hundreds of unlabeled DICOM files — takes 2–4 days per dataset</div>
+        <div class="ba-item"><div class="ba-dot"></div>Brittle one-off scripts that break on new institutions' naming conventions</div>
+        <div class="ba-item"><div class="ba-dot"></div>Silent misclassifications corrupt training data without warning</div>
+        <div class="ba-item"><div class="ba-dot"></div>No audit trail — impossible to reproduce preprocessing steps</div>
+        <div class="ba-item"><div class="ba-dot"></div>Different researchers produce inconsistent dataset structures</div>
+      </div>
+      <div class="ba-card after">
+        <div class="ba-label">After ScanSort</div>
+        <div class="ba-item"><div class="ba-dot"></div>18 files across 7 series classified and sorted in under 2 minutes</div>
+        <div class="ba-item"><div class="ba-dot"></div>Works on any institution's data without configuration or retraining</div>
+        <div class="ba-item"><div class="ba-dot"></div>Uncertain series flagged explicitly — researchers only review what needs review</div>
+        <div class="ba-item"><div class="ba-dot"></div>Full CSV log of every decision, confidence score, and decision path</div>
+        <div class="ba-item"><div class="ba-dot"></div>Identical output on identical input — fully reproducible preprocessing</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+  </footer>
+</div>
+
+<!-- DOWNLOADS PAGE -->
+<div id="page-downloads" class="page">
+
+  <div class="downloads-hero">
+    <h1>Download ScanSort</h1>
+    <p>Free for all platforms. No account required.</p>
+    <div class="model-note">⚠️ After downloading, place the Llama 3.2 3B model file inside the ScanSort folder before running.</div>
+  </div>
+
+  <div class="download-cards">
+    <div class="dl-card">
+      <span class="dl-os-icon">🪟</span>
+      <h3>Windows</h3>
+      <p>Windows 10 or later. Extract the zip and run ScanSort.exe.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Windows.zip">Download for Windows</a>
+      <div class="dl-version">v1.0.0 · 53 MB</div>
+    </div>
+    <div class="dl-card">
+      <span class="dl-os-icon">🍎</span>
+      <h3>macOS</h3>
+      <p>macOS 11 or later. Extract the zip and open the ScanSort app.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Mac.zip">Download for macOS</a>
+      <div class="dl-version">v1.0.0 · 78 MB</div>
+    </div>
+    <div class="dl-card">
+      <span class="dl-os-icon">🐧</span>
+      <h3>Linux</h3>
+      <p>Ubuntu 20.04 or later. Extract the zip and run the ScanSort binary.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Linux.zip">Download for Linux</a>
+      <div class="dl-version">v1.0.0 · 124 MB</div>
+    </div>
+  </div>
+
+  <div class="model-section">
+    <div class="model-box">
+      <h3>Required: Download the AI model</h3>
+      <p>ScanSort uses a local LLM (Llama 3.2 3B) to classify ambiguous series descriptions. Download the model file below and place it inside your ScanSort folder alongside the executable. This is a one-time 2GB download.</p>
+      <a class="model-btn" href="https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf" target="_blank">Download Llama 3.2 3B Model (2GB)</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+  </footer>
+</div>
+
+<!-- INSTRUCTIONS PAGE -->
+<div id="page-instructions" class="page">
+
+  <div class="instructions-hero">
+    <h1>How to use ScanSort</h1>
+    <p>From download to sorted output in five steps.</p>
+  </div>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Download ScanSort and the model</h3>
+        <p>Download the ScanSort zip for your operating system from the Downloads page. Also download the Llama 3.2 3B model file (2GB). Extract the ScanSort zip to a folder on your computer.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Place the model file inside the ScanSort folder</h3>
+        <p>Move the downloaded model file into the same folder as the ScanSort executable. The app looks for the model file next to itself on startup.</p>
+        <div class="folder-tree">
+          <div><span class="folder">📁 ScanSort/</span></div>
+          <div>&nbsp;&nbsp;<span class="file">ScanSort.exe</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">Llama-3.2-3B-Instruct-Q4_K_M.gguf</span> ← place here</div>
+          <div>&nbsp;&nbsp;<span class="file">... other files</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Open ScanSort and select your folders</h3>
+        <p>Launch ScanSort.exe. Click <strong>Select Folder</strong> to choose your DICOM dump folder. Click <strong>Select Output</strong> to choose where sorted files will be saved. Optionally type a Study Name to create a named subfolder.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Run classification</h3>
+        <p>Click <strong>Run Classification</strong>. ScanSort scans all DICOM files, groups them by series, and classifies each one. A progress bar shows real-time status. Results appear in the table as each series is classified.</p>
+        <div class="step-visual">
+          <div class="comment"># ScanSort processes your data:</div>
+          <div>Found 847 files in 23 series</div>
+          <div>Pancreas → CT (0.99) · physics</div>
+          <div>Brain STIR → FLAIR (0.90) · physics</div>
+          <div>CBU_DTI_64D → T2 (0.85) · physics</div>
+          <div style="color: #e05252">RESTING_STATE → unknown (0.0) · flagged ⚠️</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Review flagged series and export</h3>
+        <p>Series highlighted in red were uncertain — review those manually. Click <strong>Export Results as CSV</strong> to save a full log. Your output folder now contains sorted subfolders ready for your research pipeline.</p>
+        <div class="folder-tree">
+          <div><span class="folder">📁 Study_001/</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">📁 T1/</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">📁 T2/</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">📁 FLAIR/</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">📁 DWI/</span></div>
+          <div>&nbsp;&nbsp;<span class="folder">📁 DCE/</span></div>
+          <div>&nbsp;&nbsp;<span class="flagged">📁 flagged_for_review/</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+  </footer>
+</div>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const map = { home: 0, downloads: 1, instructions: 2 };
+  tabs[map[name]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>
