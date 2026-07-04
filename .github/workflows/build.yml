@@ -18,7 +18,7 @@ jobs:
           pip install pyinstaller pydicom PyQt6 llama-cpp-python pillow
       - name: Build
         run: |
-          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" app.py
+          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" --icon="gridsift.ico" app.py
       - name: Zip
         run: |
           Compress-Archive -Path dist\GridSift -DestinationPath GridSift-Windows.zip
