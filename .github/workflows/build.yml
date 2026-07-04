@@ -16,9 +16,19 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pyinstaller pydicom PyQt6 llama-cpp-python pillow
+      - name: Find llama_cpp lib path
+        run: |
+          python -c "import llama_cpp, os; print(os.path.join(os.path.dirname(llama_cpp.__file__), 'lib'))"
       - name: Build
         run: |
-          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" --icon="gridsift.ico" app.py
+          $llama_lib = python -c "import llama_cpp, os; print(os.path.join(os.path.dirname(llama_cpp.__file__), 'lib'))"
+          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" --icon="gridsift.ico" `
+            --add-binary "${llama_lib}\ggml-base.dll;llama_cpp\lib" `
+            --add-binary "${llama_lib}\ggml-cpu.dll;llama_cpp\lib" `
+            --add-binary "${llama_lib}\ggml.dll;llama_cpp\lib" `
+            --add-binary "${llama_lib}\llama.dll;llama_cpp\lib" `
+            --add-binary "${llama_lib}\mtmd.dll;llama_cpp\lib" `
+            app.py
       - name: Zip
         run: |
           Compress-Archive -Path dist\GridSift -DestinationPath GridSift-Windows.zip
