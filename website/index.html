@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><polygon points='22,2 40,12 40,32 22,42 4,32 4,12' fill='%231A5FA8'/><rect x='11' y='12' width='22' height='16' rx='2' fill='none' stroke='white' stroke-width='1.5'/><rect x='13' y='13.5' width='7' height='3' rx='1' fill='%234A9FE8'/><rect x='13' y='18.5' width='11' height='3' rx='1' fill='%234A9FE8'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GridSift — DICOM Series Classifier</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --blue: #f0f0f0;
-    --blue-light: #ffffff;
-    --blue-dim: #222222;
-    --bg: #000000;
-    --bg2: #0d0d0d;
-    --bg3: #1a1a1a;
-    --text: #f0f0f0;
-    --text-muted: #777777;
-    --border: #2a2a2a;
+    --blue: #1A5FA8;
+    --blue-light: #4A9FE8;
+    --blue-dim: #0d3d6e;
+    --bg: #0a0f1a;
+    --bg2: #111827;
+    --bg3: #1a2235;
+    --text: #e8edf5;
+    --text-muted: #7a8ba8;
+    --border: #1e2d45;
   }
 
   body {
@@ -26,7 +27,6 @@
     min-height: 100vh;
   }
 
-  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -56,13 +56,10 @@
     letter-spacing: -0.5px;
   }
 
-  .nav-logo-text span:first-child { color: var(--blue); }
-  .nav-logo-text span:last-child { color: var(--blue-light); }
+  .nav-logo-text span:first-child { color: #1A5FA8; }
+  .nav-logo-text span:last-child { color: #4A9FE8; }
 
-  .nav-tabs {
-    display: flex;
-    gap: 4px;
-  }
+  .nav-tabs { display: flex; gap: 4px; }
 
   .nav-tab {
     background: none;
@@ -77,13 +74,11 @@
   }
 
   .nav-tab:hover { color: var(--text); background: var(--bg3); }
-  .nav-tab.active { color: var(--blue-light); background: rgba(255, 255, 255, 0.08); }
+  .nav-tab.active { color: var(--blue-light); background: rgba(74, 159, 232, 0.1); }
 
-  /* PAGES */
   .page { display: none; padding-top: 64px; min-height: 100vh; }
   .page.active { display: block; }
 
-  /* HOME PAGE */
   .hero {
     padding: 100px 40px 80px;
     max-width: 900px;
@@ -93,8 +88,8 @@
 
   .hero-badge {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(74, 159, 232, 0.1);
+    border: 1px solid rgba(74, 159, 232, 0.3);
     color: var(--blue-light);
     font-size: 13px;
     padding: 6px 14px;
@@ -126,7 +121,7 @@
     align-items: center;
     gap: 10px;
     background: var(--blue);
-    color: #000000;
+    color: white;
     padding: 14px 32px;
     border-radius: 10px;
     font-size: 16px;
@@ -140,7 +135,6 @@
 
   .hero-cta:hover { background: var(--blue-light); }
 
-  /* WHAT IS GRIDSIFT */
   .section {
     max-width: 900px;
     margin: 0 auto;
@@ -171,7 +165,6 @@
     margin-bottom: 16px;
   }
 
-  /* BENEFITS GRID */
   .benefits {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -189,7 +182,7 @@
   .benefit-icon {
     width: 44px;
     height: 44px;
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(26, 95, 168, 0.15);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -198,20 +191,9 @@
     font-size: 22px;
   }
 
-  .benefit-card h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
+  .benefit-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+  .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin: 0; }
 
-  .benefit-card p {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin: 0;
-  }
-
-  /* BEFORE / AFTER */
   .before-after {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -250,18 +232,10 @@
     line-height: 1.6;
   }
 
-  .ba-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-top: 7px;
-    flex-shrink: 0;
-  }
-
+  .ba-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
   .before .ba-dot { background: #e05252; }
   .after .ba-dot { background: #4caf7d; }
 
-  /* DOWNLOADS PAGE */
   .downloads-hero {
     padding: 80px 40px 40px;
     max-width: 900px;
@@ -269,18 +243,8 @@
     text-align: center;
   }
 
-  .downloads-hero h1 {
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
-  }
-
-  .downloads-hero p {
-    font-size: 17px;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-  }
+  .downloads-hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+  .downloads-hero p { font-size: 17px; color: var(--text-muted); margin-bottom: 12px; }
 
   .model-note {
     display: inline-block;
@@ -312,30 +276,14 @@
   }
 
   .dl-card:hover { border-color: var(--blue); }
-
-  .dl-os-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .dl-card h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .dl-card p {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 24px;
-    line-height: 1.6;
-  }
+  .dl-os-icon { font-size: 48px; margin-bottom: 16px; display: block; }
+  .dl-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .dl-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
 
   .dl-btn {
     display: block;
     background: var(--blue);
-    color: #000000;
+    color: white;
     padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
@@ -345,12 +293,7 @@
   }
 
   .dl-btn:hover { background: var(--blue-light); }
-
-  .dl-version {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 12px;
-  }
+  .dl-version { font-size: 12px; color: var(--text-muted); margin-top: 12px; }
 
   .model-section {
     max-width: 900px;
@@ -365,23 +308,13 @@
     padding: 36px;
   }
 
-  .model-box h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  .model-box p {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
+  .model-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+  .model-box p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
 
   .model-btn {
     display: inline-block;
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(74, 159, 232, 0.1);
+    border: 1px solid rgba(74, 159, 232, 0.3);
     color: var(--blue-light);
     padding: 10px 22px;
     border-radius: 8px;
@@ -391,9 +324,8 @@
     transition: background 0.2s;
   }
 
-  .model-btn:hover { background: rgba(255, 255, 255, 0.12); }
+  .model-btn:hover { background: rgba(74, 159, 232, 0.2); }
 
-  /* INSTRUCTIONS PAGE */
   .instructions-hero {
     padding: 80px 40px 40px;
     max-width: 900px;
@@ -401,17 +333,8 @@
     text-align: center;
   }
 
-  .instructions-hero h1 {
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
-  }
-
-  .instructions-hero p {
-    font-size: 17px;
-    color: var(--text-muted);
-  }
+  .instructions-hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
+  .instructions-hero p { font-size: 17px; color: var(--text-muted); }
 
   .steps {
     max-width: 760px;
@@ -441,7 +364,7 @@
     height: 44px;
     border-radius: 50%;
     background: var(--blue);
-    color: #000000;
+    color: white;
     font-size: 17px;
     font-weight: 700;
     display: flex;
@@ -451,20 +374,8 @@
   }
 
   .step-content { flex: 1; }
-
-  .step-content h3 {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    padding-top: 8px;
-  }
-
-  .step-content p {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
+  .step-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; padding-top: 8px; }
+  .step-content p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
 
   .step-visual {
     background: var(--bg2);
@@ -494,7 +405,6 @@
   .folder-tree .file { color: var(--text-muted); }
   .folder-tree .flagged { color: #e05252; }
 
-  /* FOOTER */
   footer {
     border-top: 1px solid var(--border);
     padding: 32px 40px;
@@ -521,7 +431,7 @@
 <nav>
   <a class="nav-logo" href="#" onclick="showPage('home')">
     <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="#1a1a1a"/>
+      <polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="#1A5FA8"/>
       <rect x="11" y="12" width="22" height="16" rx="2" fill="none" stroke="white" stroke-width="1.5" opacity="0.9"/>
       <line x1="11" y1="17" x2="33" y2="17" stroke="white" stroke-width="1" opacity="0.5"/>
       <line x1="11" y1="22" x2="33" y2="22" stroke="white" stroke-width="1" opacity="0.5"/>
@@ -545,14 +455,11 @@
 
 <!-- HOME PAGE -->
 <div id="page-home" class="page active">
-
   <div class="hero">
     <div class="hero-badge">Free · Open Source · Runs Locally</div>
     <h1>Sort your DICOM files<br>in <span class="blue">minutes, not days</span></h1>
     <p>GridSift automatically classifies raw MRI series from any hospital export — T1, T2, FLAIR, DWI, DCE — and sorts them into labeled folders, ready for research.</p>
-    <button class="hero-cta" onclick="showPage('downloads')">
-      Download GridSift
-    </button>
+    <button class="hero-cta" onclick="showPage('downloads')">Download GridSift</button>
   </div>
 
   <div class="section">
@@ -560,45 +467,19 @@
     <h2>Built for medical imaging researchers</h2>
     <p>When hospitals export imaging data, researchers receive hundreds of mixed, unlabeled DICOM files with inconsistent naming conventions that vary by institution, scanner vendor, and country. Before any actual research can begin, someone has to manually sort through all of it — which takes days on large datasets.</p>
     <p>GridSift solves this with a two-stage pipeline: a physics-based filter that uses vendor-agnostic MRI acquisition parameters (TE, TR, flip angle, inversion time) to classify unambiguous series, and a local LLM that handles the rest. Uncertain series are explicitly flagged for human review — never silently mislabeled.</p>
-
     <div class="benefits">
-      <div class="benefit-card">
-        <div class="benefit-icon">🔒</div>
-        <h3>Fully local</h3>
-        <p>No data leaves your machine. No API keys, no internet connection required, no cost per use. Safe for sensitive clinical data.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">⚡</div>
-        <h3>Physics-first</h3>
-        <p>Uses vendor-agnostic numeric MRI parameters as primary signal — works regardless of how the hospital named the series.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">🚩</div>
-        <h3>Uncertainty flagging</h3>
-        <p>Uncertain series are flagged for human review, never silently misclassified. Every decision is logged and auditable.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">📁</div>
-        <h3>Sorted output</h3>
-        <p>Files are copied into labeled subfolders — T1, T2, FLAIR, DWI, DCE, flagged_for_review — ready for your pipeline.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">📊</div>
-        <h3>CSV export</h3>
-        <p>Every classification is logged with confidence score and decision path. Export to CSV for full reproducibility.</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">🌐</div>
-        <h3>Multi-site ready</h3>
-        <p>Works across institutions, scanner vendors, and naming conventions. No retraining or configuration needed.</p>
-      </div>
+      <div class="benefit-card"><div class="benefit-icon">🔒</div><h3>Fully local</h3><p>No data leaves your machine. No API keys, no internet connection required, no cost per use. Safe for sensitive clinical data.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">⚡</div><h3>Physics-first</h3><p>Uses vendor-agnostic numeric MRI parameters as primary signal — works regardless of how the hospital named the series.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">🚩</div><h3>Uncertainty flagging</h3><p>Uncertain series are flagged for human review, never silently misclassified. Every decision is logged and auditable.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">📁</div><h3>Sorted output</h3><p>Files are copied into labeled subfolders — T1, T2, FLAIR, DWI, DCE, flagged_for_review — ready for your pipeline.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">📊</div><h3>CSV export</h3><p>Every classification is logged with confidence score and decision path. Export to CSV for full reproducibility.</p></div>
+      <div class="benefit-card"><div class="benefit-icon">🌐</div><h3>Multi-site ready</h3><p>Works across institutions, scanner vendors, and naming conventions. No retraining or configuration needed.</p></div>
     </div>
   </div>
 
   <div class="section">
     <div class="section-label">Before vs After</div>
     <h2>What changes for researchers</h2>
-
     <div class="before-after">
       <div class="ba-card before">
         <div class="ba-label">Before GridSift</div>
@@ -620,13 +501,12 @@
   </div>
 
   <footer>
-    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/gridsift" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
   </footer>
 </div>
 
 <!-- DOWNLOADS PAGE -->
 <div id="page-downloads" class="page">
-
   <div class="downloads-hero">
     <h1>Download GridSift</h1>
     <p>Free for all platforms. No account required.</p>
@@ -638,22 +518,22 @@
       <span class="dl-os-icon">🪟</span>
       <h3>Windows</h3>
       <p>Windows 10 or later. Extract the zip and run GridSift.exe.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Windows.zip">Download for Windows</a>
-      <div class="dl-version">v1.0.0 · 53 MB</div>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Windows.zip">Download for Windows</a>
+      <div class="dl-version">v1.0.1 · 53 MB</div>
     </div>
     <div class="dl-card">
       <span class="dl-os-icon">🍎</span>
       <h3>macOS</h3>
       <p>macOS 11 or later. Extract the zip and open the GridSift app.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Mac.zip">Download for macOS</a>
-      <div class="dl-version">v1.0.0 · 78 MB</div>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Mac.zip">Download for macOS</a>
+      <div class="dl-version">v1.0.1 · 78 MB</div>
     </div>
     <div class="dl-card">
       <span class="dl-os-icon">🐧</span>
       <h3>Linux</h3>
       <p>Ubuntu 20.04 or later. Extract the zip and run the GridSift binary.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Linux.zip">Download for Linux</a>
-      <div class="dl-version">v1.0.0 · 124 MB</div>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Linux.zip">Download for Linux</a>
+      <div class="dl-version">v1.0.1 · 124 MB</div>
     </div>
   </div>
 
@@ -672,14 +552,12 @@
 
 <!-- INSTRUCTIONS PAGE -->
 <div id="page-instructions" class="page">
-
   <div class="instructions-hero">
     <h1>How to use GridSift</h1>
     <p>From download to sorted output in five steps.</p>
   </div>
 
   <div class="steps">
-
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
@@ -742,11 +620,10 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <footer>
-    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/gridsift" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
   </footer>
 </div>
 
