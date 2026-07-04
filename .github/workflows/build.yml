@@ -18,7 +18,7 @@ jobs:
           pip install pyinstaller pydicom PyQt6 llama-cpp-python pillow
       - name: Build
         run: |
-          python -m PyInstaller --onedir --windowed --name "GridSift" app.py
+          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" app.py
       - name: Zip
         run: |
           Compress-Archive -Path dist\GridSift -DestinationPath GridSift-Windows.zip
@@ -39,7 +39,7 @@ jobs:
           pip install pyinstaller pydicom PyQt6 llama-cpp-python pillow
       - name: Build
         run: |
-          python -m PyInstaller --onedir --windowed --name "GridSift" app.py
+          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" app.py
       - name: Zip
         run: |
           zip -r GridSift-Mac.zip dist/GridSift
@@ -61,7 +61,7 @@ jobs:
           sudo apt-get install -y libxcb-xinerama0 libxcb1 libx11-6
       - name: Build
         run: |
-          python -m PyInstaller --onedir --windowed --name "GridSift" app.py
+          python -m PyInstaller --noconfirm --onedir --windowed --name "GridSift" app.py
       - name: Zip
         run: |
           zip -r GridSift-Linux.zip dist/GridSift
