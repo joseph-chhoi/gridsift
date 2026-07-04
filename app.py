@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
     QProgressBar, QTableWidget, QTableWidgetItem, QHeaderView
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
-from PyQt6.QtGui import QFont, QColor
+from PyQt6.QtGui import QFont, QColor, QIcon
 from pipeline import find_dcm_files, group_by_series, sort_into_folders
 from extract import classify_series
 
@@ -51,8 +51,18 @@ class WorkerThread(QThread):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("DICOM Series Classifier")
+        self.setWindowTitle("GridSift")
         self.setMinimumSize(800, 600)
+
+        # Set window icon
+        if getattr(sys, 'frozen', False):
+            base_dir = os.path.dirname(sys.executable)
+        else:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(base_dir, "gridsift.ico")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+
         self.folder_path = None
         self.output_folder = None
         self.setup_ui()
@@ -65,7 +75,7 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(24, 24, 24, 24)
 
         # Title
-        title = QLabel("DICOM Series Classifier")
+        title = QLabel("GridSift")
         title.setFont(QFont("Arial", 20, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
@@ -173,7 +183,6 @@ class MainWindow(QMainWindow):
 
         study_name = self.study_name_input.text().strip()
         if study_name:
-            import os
             final_output = os.path.join(self.output_folder, study_name)
         else:
             final_output = self.output_folder

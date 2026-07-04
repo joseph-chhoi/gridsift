@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ScanSort — DICOM Series Classifier</title>
+<title>GridSift — DICOM Series Classifier</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -140,7 +140,7 @@
 
   .hero-cta:hover { background: var(--blue-light); }
 
-  /* WHAT IS SCANSORT */
+  /* WHAT IS GRIDSIFT */
   .section {
     max-width: 900px;
     margin: 0 auto;
@@ -533,7 +533,7 @@
       <polygon points="22,38 19,34 25,34" fill="white" opacity="0.8"/>
     </svg>
     <div class="nav-logo-text">
-      <span>Scan</span><span>Sort</span>
+      <span>Grid</span><span>Sift</span>
     </div>
   </a>
   <div class="nav-tabs">
@@ -549,17 +549,17 @@
   <div class="hero">
     <div class="hero-badge">Free · Open Source · Runs Locally</div>
     <h1>Sort your DICOM files<br>in <span class="blue">minutes, not days</span></h1>
-    <p>ScanSort automatically classifies raw MRI series from any hospital export — T1, T2, FLAIR, DWI, DCE — and sorts them into labeled folders, ready for research.</p>
+    <p>GridSift automatically classifies raw MRI series from any hospital export — T1, T2, FLAIR, DWI, DCE — and sorts them into labeled folders, ready for research.</p>
     <button class="hero-cta" onclick="showPage('downloads')">
-      Download ScanSort
+      Download GridSift
     </button>
   </div>
 
   <div class="section">
-    <div class="section-label">What is ScanSort</div>
+    <div class="section-label">What is GridSift</div>
     <h2>Built for medical imaging researchers</h2>
     <p>When hospitals export imaging data, researchers receive hundreds of mixed, unlabeled DICOM files with inconsistent naming conventions that vary by institution, scanner vendor, and country. Before any actual research can begin, someone has to manually sort through all of it — which takes days on large datasets.</p>
-    <p>ScanSort solves this with a two-stage pipeline: a physics-based filter that uses vendor-agnostic MRI acquisition parameters (TE, TR, flip angle, inversion time) to classify unambiguous series, and a local LLM that handles the rest. Uncertain series are explicitly flagged for human review — never silently mislabeled.</p>
+    <p>GridSift solves this with a two-stage pipeline: a physics-based filter that uses vendor-agnostic MRI acquisition parameters (TE, TR, flip angle, inversion time) to classify unambiguous series, and a local LLM that handles the rest. Uncertain series are explicitly flagged for human review — never silently mislabeled.</p>
 
     <div class="benefits">
       <div class="benefit-card">
@@ -601,7 +601,7 @@
 
     <div class="before-after">
       <div class="ba-card before">
-        <div class="ba-label">Before ScanSort</div>
+        <div class="ba-label">Before GridSift</div>
         <div class="ba-item"><div class="ba-dot"></div>Manually sorting hundreds of unlabeled DICOM files — takes 2–4 days per dataset</div>
         <div class="ba-item"><div class="ba-dot"></div>Brittle one-off scripts that break on new institutions' naming conventions</div>
         <div class="ba-item"><div class="ba-dot"></div>Silent misclassifications corrupt training data without warning</div>
@@ -609,7 +609,7 @@
         <div class="ba-item"><div class="ba-dot"></div>Different researchers produce inconsistent dataset structures</div>
       </div>
       <div class="ba-card after">
-        <div class="ba-label">After ScanSort</div>
+        <div class="ba-label">After GridSift</div>
         <div class="ba-item"><div class="ba-dot"></div>18 files across 7 series classified and sorted in under 2 minutes</div>
         <div class="ba-item"><div class="ba-dot"></div>Works on any institution's data without configuration or retraining</div>
         <div class="ba-item"><div class="ba-dot"></div>Uncertain series flagged explicitly — researchers only review what needs review</div>
@@ -620,7 +620,7 @@
   </div>
 
   <footer>
-    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
   </footer>
 </div>
 
@@ -628,31 +628,31 @@
 <div id="page-downloads" class="page">
 
   <div class="downloads-hero">
-    <h1>Download ScanSort</h1>
+    <h1>Download GridSift</h1>
     <p>Free for all platforms. No account required.</p>
-    <div class="model-note">⚠️ After downloading, place the Llama 3.2 3B model file inside the ScanSort folder before running.</div>
+    <div class="model-note">⚠️ After downloading, place the Llama 3.2 3B model file inside the GridSift folder before running.</div>
   </div>
 
   <div class="download-cards">
     <div class="dl-card">
       <span class="dl-os-icon">🪟</span>
       <h3>Windows</h3>
-      <p>Windows 10 or later. Extract the zip and run ScanSort.exe.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Windows.zip">Download for Windows</a>
+      <p>Windows 10 or later. Extract the zip and run GridSift.exe.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Windows.zip">Download for Windows</a>
       <div class="dl-version">v1.0.0 · 53 MB</div>
     </div>
     <div class="dl-card">
       <span class="dl-os-icon">🍎</span>
       <h3>macOS</h3>
-      <p>macOS 11 or later. Extract the zip and open the ScanSort app.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Mac.zip">Download for macOS</a>
+      <p>macOS 11 or later. Extract the zip and open the GridSift app.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Mac.zip">Download for macOS</a>
       <div class="dl-version">v1.0.0 · 78 MB</div>
     </div>
     <div class="dl-card">
       <span class="dl-os-icon">🐧</span>
       <h3>Linux</h3>
-      <p>Ubuntu 20.04 or later. Extract the zip and run the ScanSort binary.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/dicom-classifier/releases/download/v1.0.0/ScanSort-Linux.zip">Download for Linux</a>
+      <p>Ubuntu 20.04 or later. Extract the zip and run the GridSift binary.</p>
+      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.0/GridSift-Linux.zip">Download for Linux</a>
       <div class="dl-version">v1.0.0 · 124 MB</div>
     </div>
   </div>
@@ -660,13 +660,13 @@
   <div class="model-section">
     <div class="model-box">
       <h3>Required: Download the AI model</h3>
-      <p>ScanSort uses a local LLM (Llama 3.2 3B) to classify ambiguous series descriptions. Download the model file below and place it inside your ScanSort folder alongside the executable. This is a one-time 2GB download.</p>
+      <p>GridSift uses a local LLM (Llama 3.2 3B) to classify ambiguous series descriptions. Download the model file below and place it inside your GridSift folder alongside the executable. This is a one-time 2GB download.</p>
       <a class="model-btn" href="https://huggingface.co/bartowski/Llama-3.2-3B-Instruct-GGUF/resolve/main/Llama-3.2-3B-Instruct-Q4_K_M.gguf" target="_blank">Download Llama 3.2 3B Model (2GB)</a>
     </div>
   </div>
 
   <footer>
-    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/gridsift" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
   </footer>
 </div>
 
@@ -674,7 +674,7 @@
 <div id="page-instructions" class="page">
 
   <div class="instructions-hero">
-    <h1>How to use ScanSort</h1>
+    <h1>How to use GridSift</h1>
     <p>From download to sorted output in five steps.</p>
   </div>
 
@@ -683,19 +683,19 @@
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-content">
-        <h3>Download ScanSort and the model</h3>
-        <p>Download the ScanSort zip for your operating system from the Downloads page. Also download the Llama 3.2 3B model file (2GB). Extract the ScanSort zip to a folder on your computer.</p>
+        <h3>Download GridSift and the model</h3>
+        <p>Download the GridSift zip for your operating system from the Downloads page. Also download the Llama 3.2 3B model file (2GB). Extract the GridSift zip to a folder on your computer.</p>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-content">
-        <h3>Place the model file inside the ScanSort folder</h3>
-        <p>Move the downloaded model file into the same folder as the ScanSort executable. The app looks for the model file next to itself on startup.</p>
+        <h3>Place the model file inside the GridSift folder</h3>
+        <p>Move the downloaded model file into the same folder as the GridSift executable. The app looks for the model file next to itself on startup.</p>
         <div class="folder-tree">
-          <div><span class="folder">📁 ScanSort/</span></div>
-          <div>&nbsp;&nbsp;<span class="file">ScanSort.exe</span></div>
+          <div><span class="folder">📁 GridSift/</span></div>
+          <div>&nbsp;&nbsp;<span class="file">GridSift.exe</span></div>
           <div>&nbsp;&nbsp;<span class="folder">Llama-3.2-3B-Instruct-Q4_K_M.gguf</span> ← place here</div>
           <div>&nbsp;&nbsp;<span class="file">... other files</span></div>
         </div>
@@ -705,8 +705,8 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <h3>Open ScanSort and select your folders</h3>
-        <p>Launch ScanSort.exe. Click <strong>Select Folder</strong> to choose your DICOM dump folder. Click <strong>Select Output</strong> to choose where sorted files will be saved. Optionally type a Study Name to create a named subfolder.</p>
+        <h3>Open GridSift and select your folders</h3>
+        <p>Launch GridSift.exe. Click <strong>Select Folder</strong> to choose your DICOM dump folder. Click <strong>Select Output</strong> to choose where sorted files will be saved. Optionally type a Study Name to create a named subfolder.</p>
       </div>
     </div>
 
@@ -714,9 +714,9 @@
       <div class="step-num">4</div>
       <div class="step-content">
         <h3>Run classification</h3>
-        <p>Click <strong>Run Classification</strong>. ScanSort scans all DICOM files, groups them by series, and classifies each one. A progress bar shows real-time status. Results appear in the table as each series is classified.</p>
+        <p>Click <strong>Run Classification</strong>. GridSift scans all DICOM files, groups them by series, and classifies each one. A progress bar shows real-time status. Results appear in the table as each series is classified.</p>
         <div class="step-visual">
-          <div class="comment"># ScanSort processes your data:</div>
+          <div class="comment"># GridSift processes your data:</div>
           <div>Found 847 files in 23 series</div>
           <div>Pancreas → CT (0.99) · physics</div>
           <div>Brain STIR → FLAIR (0.90) · physics</div>
@@ -746,7 +746,7 @@
   </div>
 
   <footer>
-    <p>ScanSort is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
+    <p>GridSift is free and open source · <a href="https://github.com/joseph-chhoi/dicom-classifier" target="_blank">View on GitHub</a> · Built for medical imaging researchers</p>
   </footer>
 </div>
 
