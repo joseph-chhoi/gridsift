@@ -199,14 +199,14 @@
     font-size: 44px;
     font-weight: 600;
     letter-spacing: -0.4px;
-    color: var(--text);
+    color: var(--blue-dim);
     margin-bottom: 12px;
   }
 
   .what-sub {
     font-size: 16px;
     font-weight: 600;
-    color: var(--blue);
+    color: var(--text);
     margin-bottom: 44px;
   }
 
@@ -284,14 +284,14 @@
     font-size: 44px;
     font-weight: 600;
     letter-spacing: -0.4px;
-    color: var(--text);
+    color: var(--blue-dim);
     margin-bottom: 10px;
   }
 
   .ba-sub {
     font-size: 15px;
-    font-weight: 300;
-    color: var(--text-muted);
+    font-weight: 500;
+    color: var(--text);
     margin-bottom: 44px;
   }
 
@@ -326,40 +326,42 @@
 
   .ba-list {
     list-style: none;
+    counter-reset: ba-counter;
   }
 
   .ba-list li {
     position: relative;
-    padding-left: 16px;
+    padding-left: 26px;
     font-size: 14px;
     font-weight: 300;
     color: var(--text-muted);
     line-height: 1.75;
     margin-bottom: 12px;
+    counter-increment: ba-counter;
   }
 
   .ba-card.before .ba-list li::before {
-    content: '';
+    content: counter(ba-counter);
     position: absolute;
     left: 0;
-    top: 9px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #d94f4f;
-    opacity: 0.55;
+    top: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.75;
+    color: #d94f4f;
+    opacity: 0.75;
   }
 
   .ba-card.after .ba-list li::before {
-    content: '';
+    content: counter(ba-counter);
     position: absolute;
     left: 0;
-    top: 9px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #3ea06b;
-    opacity: 0.55;
+    top: 0;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.75;
+    color: #3ea06b;
+    opacity: 0.75;
   }
 
   .downloads-hero {
