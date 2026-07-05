@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><polygon points='22,2 40,12 40,32 22,42 4,32 4,12' fill='%232e7fcf'/><rect x='11' y='12' width='22' height='16' rx='2' fill='none' stroke='white' stroke-width='1.5'/><rect x='13' y='13.5' width='7' height='3' rx='1' fill='%235ba8e8'/><rect x='13' y='18.5' width='11' height='3' rx='1' fill='%235ba8e8'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GridSift — DICOM Series Classifier</title>
@@ -26,15 +26,12 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
     font-size: 16px;
-    line-height: 1.6;
+    font-weight: 400;
+    line-height: 1.65;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-  }
-
-  h1, h2, h3 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 
   nav {
@@ -61,10 +58,9 @@
   .nav-logo svg { width: 36px; height: 36px; }
 
   .nav-logo-text {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
   }
 
   .nav-logo-text span:first-child { color: #2e7fcf; }
@@ -77,7 +73,7 @@
     border: none;
     color: var(--text-muted);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 400;
     padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
@@ -104,19 +100,19 @@
     border: 1px solid rgba(46, 127, 207, 0.22);
     color: var(--blue);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     padding: 5px 14px;
     border-radius: 20px;
     margin-bottom: 32px;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
   }
 
   .hero h1 {
-    font-size: 52px;
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -1px;
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 1.14;
+    letter-spacing: -0.5px;
     margin-bottom: 24px;
   }
 
@@ -140,7 +136,7 @@
     padding: 13px 30px;
     border-radius: 10px;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 0.1px;
     text-decoration: none;
     transition: background 0.2s;
@@ -160,22 +156,23 @@
 
   .section-label {
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
     color: var(--blue);
     text-transform: uppercase;
     margin-bottom: 14px;
   }
 
   .section h2 {
-    font-size: 34px;
-    font-weight: 700;
-    letter-spacing: -0.4px;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
     margin-bottom: 18px;
   }
 
   .section p {
     font-size: 16px;
+    font-weight: 300;
     color: var(--text-muted);
     line-height: 1.8;
     margin-bottom: 16px;
@@ -208,8 +205,8 @@
     font-size: 22px;
   }
 
-  .benefit-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
-  .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin: 0; }
+  .benefit-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
+  .benefit-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin: 0; }
 
   .before-after {
     display: grid;
@@ -246,6 +243,7 @@
     gap: 12px;
     margin-bottom: 16px;
     font-size: 15px;
+    font-weight: 300;
     color: var(--text-muted);
     line-height: 1.6;
   }
@@ -261,8 +259,8 @@
     text-align: center;
   }
 
-  .downloads-hero h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 14px; }
-  .downloads-hero p { font-size: 16px; color: var(--text-muted); margin-bottom: 12px; }
+  .downloads-hero h1 { font-size: 38px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .downloads-hero p { font-size: 16px; font-weight: 300; color: var(--text-muted); margin-bottom: 12px; }
 
   .model-note {
     display: inline-block;
@@ -297,8 +295,8 @@
   .dl-card:hover { border-color: var(--blue); box-shadow: 0 4px 18px rgba(46, 127, 207, 0.12); }
 
   .dl-os-icon { font-size: 48px; margin-bottom: 16px; display: block; }
-  .dl-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-  .dl-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; }
+  .dl-card h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+  .dl-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; }
 
   .dl-btn {
     display: block;
@@ -329,8 +327,8 @@
     box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
-  .model-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-  .model-box p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
+  .model-box h3 { font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+  .model-box p { font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
 
   .model-btn {
     display: inline-block;
@@ -354,8 +352,8 @@
     text-align: center;
   }
 
-  .instructions-hero h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 14px; }
-  .instructions-hero p { font-size: 16px; color: var(--text-muted); }
+  .instructions-hero h1 { font-size: 38px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 14px; }
+  .instructions-hero p { font-size: 16px; font-weight: 300; color: var(--text-muted); }
 
   .steps {
     max-width: 760px;
@@ -395,8 +393,8 @@
   }
 
   .step-content { flex: 1; }
-  .step-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; padding-top: 8px; }
-  .step-content p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
+  .step-content h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; padding-top: 8px; }
+  .step-content p { font-size: 15px; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
 
   .step-visual {
     background: var(--bg3);
@@ -431,7 +429,8 @@
     padding: 32px 40px;
     text-align: center;
     color: var(--text-muted);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 300;
   }
 
   footer a { color: var(--blue); text-decoration: none; }
