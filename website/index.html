@@ -193,6 +193,61 @@
     margin-bottom: 16px;
   }
 
+  .what-section { text-align: center; }
+
+  .what-heading {
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .what-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 44px;
+  }
+
+  .what-bullets {
+    list-style: none;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto 48px;
+  }
+
+  .what-bullets li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+
+  .what-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--blue);
+    opacity: 0.4;
+  }
+
+  .features-intro {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    opacity: 0.75;
+  }
+
   .benefits {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -502,18 +557,23 @@
     <button class="hero-cta" onclick="showPage('downloads')">Download GridSift</button>
   </div>
 
-  <div class="section">
-    <div class="section-label">What is GridSift</div>
-    <h2>Built for medical imaging researchers</h2>
-    <p>When hospitals export imaging data, researchers receive hundreds of mixed, unlabeled DICOM files with inconsistent naming conventions that vary by institution, scanner vendor, and country. Before any actual research can begin, someone has to manually sort through all of it — which takes days on large datasets.</p>
-    <p>GridSift solves this with a two-stage pipeline: a physics-based filter that uses vendor-agnostic MRI acquisition parameters (TE, TR, flip angle, inversion time) to classify unambiguous series, and a local LLM that handles the rest. Uncertain series are explicitly flagged for human review — never silently mislabeled.</p>
+  <div class="section what-section">
+    <h2 class="what-heading">What is GridSift</h2>
+    <p class="what-sub">Built for medical imaging researchers</p>
+    <ul class="what-bullets">
+      <li>Hospital imaging exports arrive unlabeled. Naming conventions differ by institution, vendor, and country — there's no universal standard to rely on.</li>
+      <li>Before any analysis begins, someone has to manually sort through hundreds of DICOM files. On large datasets, that's days of work before research even starts.</li>
+      <li>GridSift's physics-based filter reads acquisition parameters — TE, TR, flip angle, inversion time — to classify series automatically, regardless of how they're named.</li>
+      <li>A local LLM handles what the physics filter can't resolve. Uncertain series are always flagged for review, never silently assigned the wrong label.</li>
+    </ul>
+    <p class="features-intro">Everything runs on your machine. Here's what that means in practice.</p>
     <div class="benefits">
-      <div class="benefit-card"><h3>Fully local</h3><p>No data leaves your machine. No API keys, no internet connection required, no cost per use. Safe for sensitive clinical data.</p></div>
-      <div class="benefit-card"><h3>Physics-first</h3><p>Uses vendor-agnostic numeric MRI parameters as primary signal — works regardless of how the hospital named the series.</p></div>
-      <div class="benefit-card"><h3>Uncertainty flagging</h3><p>Uncertain series are flagged for human review, never silently misclassified. Every decision is logged and auditable.</p></div>
-      <div class="benefit-card"><h3>Sorted output</h3><p>Files are copied into labeled subfolders — T1, T2, FLAIR, DWI, DCE, flagged_for_review — ready for your pipeline.</p></div>
-      <div class="benefit-card"><h3>CSV export</h3><p>Every classification is logged with confidence score and decision path. Export to CSV for full reproducibility.</p></div>
-      <div class="benefit-card"><h3>Multi-site ready</h3><p>Works across institutions, scanner vendors, and naming conventions. No retraining or configuration needed.</p></div>
+      <div class="benefit-card"><h3>Fully local</h3><p>No data leaves your machine. No API keys, no internet connection, no cost per run. Built for sensitive clinical data.</p></div>
+      <div class="benefit-card"><h3>Physics-first</h3><p>MRI acquisition parameters are the primary signal — so it works across institutions regardless of how series are named.</p></div>
+      <div class="benefit-card"><h3>Uncertainty flagging</h3><p>Anything the pipeline isn't confident about gets flagged, not guessed. Every decision is logged and auditable.</p></div>
+      <div class="benefit-card"><h3>Sorted output</h3><p>Results land in labeled subfolders — T1, T2, FLAIR, DWI, DCE, flagged_for_review — ready to hand off to your pipeline.</p></div>
+      <div class="benefit-card"><h3>CSV export</h3><p>Each classification is logged with a confidence score and decision path. Fully reproducible from run to run.</p></div>
+      <div class="benefit-card"><h3>Multi-site ready</h3><p>Tested across institutions, vendors, and naming conventions. No retraining, no reconfiguring between sites.</p></div>
     </div>
   </div>
 
