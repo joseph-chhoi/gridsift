@@ -278,11 +278,27 @@
   .benefit-card h3 { font-size: 15px; font-weight: 500; margin-bottom: 8px; }
   .benefit-card p { font-size: 14px; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin: 0; }
 
+  .ba-section { text-align: center; }
+
+  .ba-heading {
+    font-size: 44px;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .ba-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text-muted);
+    margin-bottom: 44px;
+  }
+
   .before-after {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    margin-top: 48px;
   }
 
   .ba-card {
@@ -291,36 +307,60 @@
     border-radius: 12px;
     padding: 32px;
     box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
+    text-align: left;
   }
 
-  .ba-card.before { border-top: 3px solid #e05252; }
-  .ba-card.after { border-top: 3px solid #4caf7d; }
+  .ba-card.before { border-left: 3px solid #d94f4f; }
+  .ba-card.after  { border-left: 3px solid #3ea06b; }
 
   .ba-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
     margin-bottom: 20px;
   }
 
-  .ba-card.before .ba-label { color: #e05252; }
-  .ba-card.after .ba-label { color: #4caf7d; }
+  .ba-card.before .ba-label { color: #d94f4f; }
+  .ba-card.after  .ba-label { color: #3ea06b; }
 
-  .ba-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 16px;
-    font-size: 15px;
-    font-weight: 300;
-    color: var(--text-muted);
-    line-height: 1.6;
+  .ba-list {
+    list-style: none;
   }
 
-  .ba-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 7px; flex-shrink: 0; }
-  .before .ba-dot { background: #e05252; }
-  .after .ba-dot { background: #4caf7d; }
+  .ba-list li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+
+  .ba-card.before .ba-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #d94f4f;
+    opacity: 0.55;
+  }
+
+  .ba-card.after .ba-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #3ea06b;
+    opacity: 0.55;
+  }
 
   .downloads-hero {
     padding: 80px 40px 40px;
@@ -577,25 +617,29 @@
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-label">Before vs After</div>
-    <h2>What changes for researchers</h2>
+  <div class="section ba-section">
+    <h2 class="ba-heading">Before vs. After</h2>
+    <p class="ba-sub">What using GridSift actually changes</p>
     <div class="before-after">
       <div class="ba-card before">
-        <div class="ba-label">Before GridSift</div>
-        <div class="ba-item"><div class="ba-dot"></div>Manually sorting hundreds of unlabeled DICOM files — takes 2–4 days per dataset</div>
-        <div class="ba-item"><div class="ba-dot"></div>Brittle one-off scripts that break on new institutions' naming conventions</div>
-        <div class="ba-item"><div class="ba-dot"></div>Silent misclassifications corrupt training data without warning</div>
-        <div class="ba-item"><div class="ba-dot"></div>No audit trail — impossible to reproduce preprocessing steps</div>
-        <div class="ba-item"><div class="ba-dot"></div>Different researchers produce inconsistent dataset structures</div>
+        <div class="ba-label">Without GridSift</div>
+        <ul class="ba-list">
+          <li>Sorting hundreds of unlabeled DICOM files by hand — often 2 to 4 days before any analysis can start</li>
+          <li>One-off scripts that break the moment a new institution uses different naming conventions</li>
+          <li>Misclassifications that silently corrupt training data, with no record of what went wrong</li>
+          <li>No audit trail — preprocessing steps are impossible to reproduce across researchers</li>
+          <li>Every team member produces a slightly different folder structure</li>
+        </ul>
       </div>
       <div class="ba-card after">
-        <div class="ba-label">After GridSift</div>
-        <div class="ba-item"><div class="ba-dot"></div>18 files across 7 series classified and sorted in under 2 minutes</div>
-        <div class="ba-item"><div class="ba-dot"></div>Works on any institution's data without configuration or retraining</div>
-        <div class="ba-item"><div class="ba-dot"></div>Uncertain series flagged explicitly — researchers only review what needs review</div>
-        <div class="ba-item"><div class="ba-dot"></div>Full CSV log of every decision, confidence score, and decision path</div>
-        <div class="ba-item"><div class="ba-dot"></div>Identical output on identical input — fully reproducible preprocessing</div>
+        <div class="ba-label">With GridSift</div>
+        <ul class="ba-list">
+          <li>Hundreds of files classified and sorted in minutes, not days</li>
+          <li>Works across any institution's export without configuration or retraining</li>
+          <li>Low-confidence series get flagged — you only review what actually needs a second look</li>
+          <li>Every decision logged with a confidence score and the path that produced it</li>
+          <li>Same input always produces the same output — fully reproducible from run to run</li>
+        </ul>
       </div>
     </div>
   </div>
