@@ -83,6 +83,7 @@
 
   .nav-tab:hover { color: var(--text); background: var(--bg3); }
   .nav-tab.active { color: var(--blue); background: rgba(46, 127, 207, 0.1); }
+  a.nav-tab { text-decoration: none; }
 
   .page { display: none; padding-top: 64px; min-height: 100vh; }
   .page.active { display: block; }
@@ -484,6 +485,7 @@
     <button class="nav-tab active" onclick="showPage('home')">Home</button>
     <button class="nav-tab" onclick="showPage('downloads')">Download</button>
     <button class="nav-tab" onclick="showPage('instructions')">Instructions</button>
+    <a class="nav-tab" href="https://github.com/joseph-chhoi/gridsift" target="_blank">Developers</a>
   </div>
 </nav>
 
