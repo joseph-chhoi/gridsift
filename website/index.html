@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><polygon points='22,2 40,12 40,32 22,42 4,32 4,12' fill='%232e7fcf'/><rect x='11' y='12' width='22' height='16' rx='2' fill='none' stroke='white' stroke-width='1.5'/><rect x='13' y='13.5' width='7' height='3' rx='1' fill='%235ba8e8'/><rect x='13' y='18.5' width='11' height='3' rx='1' fill='%235ba8e8'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GridSift — DICOM Series Classifier</title>
@@ -15,16 +18,23 @@
     --bg: #f2f6fb;
     --bg2: #ffffff;
     --bg3: #e6edf7;
-    --text: #18243a;
-    --text-muted: #6478a0;
+    --text: #0e1c30;
+    --text-muted: #587090;
     --border: #cdd8ea;
   }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
   }
 
   nav {
@@ -51,9 +61,10 @@
   .nav-logo svg { width: 36px; height: 36px; }
 
   .nav-logo-text {
-    font-size: 22px;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 21px;
     font-weight: 700;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.3px;
   }
 
   .nav-logo-text span:first-child { color: #2e7fcf; }
@@ -65,8 +76,9 @@
     background: none;
     border: none;
     color: var(--text-muted);
-    font-size: 15px;
-    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
@@ -91,28 +103,31 @@
     background: rgba(46, 127, 207, 0.08);
     border: 1px solid rgba(46, 127, 207, 0.22);
     color: var(--blue);
-    font-size: 13px;
-    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
     border-radius: 20px;
     margin-bottom: 32px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
   }
 
   .hero h1 {
-    font-size: 56px;
+    font-size: 52px;
     font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -1.5px;
+    line-height: 1.12;
+    letter-spacing: -1px;
     margin-bottom: 24px;
   }
 
   .hero h1 .blue { color: var(--blue-light); }
 
   .hero p {
-    font-size: 19px;
+    font-size: 17px;
+    font-weight: 400;
     color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 660px;
+    line-height: 1.75;
+    max-width: 620px;
     margin: 0 auto 40px;
   }
 
@@ -122,10 +137,11 @@
     gap: 10px;
     background: var(--blue);
     color: white;
-    padding: 14px 32px;
+    padding: 13px 30px;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
+    letter-spacing: 0.1px;
     text-decoration: none;
     transition: background 0.2s;
     cursor: pointer;
@@ -143,23 +159,23 @@
   }
 
   .section-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 2px;
-    color: var(--blue-light);
+    color: var(--blue);
     text-transform: uppercase;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .section h2 {
-    font-size: 36px;
+    font-size: 34px;
     font-weight: 700;
-    letter-spacing: -0.5px;
-    margin-bottom: 20px;
+    letter-spacing: -0.4px;
+    margin-bottom: 18px;
   }
 
   .section p {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--text-muted);
     line-height: 1.8;
     margin-bottom: 16px;
@@ -192,8 +208,8 @@
     font-size: 22px;
   }
 
-  .benefit-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
-  .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin: 0; }
+  .benefit-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .benefit-card p { font-size: 14px; color: var(--text-muted); line-height: 1.75; margin: 0; }
 
   .before-after {
     display: grid;
@@ -245,8 +261,8 @@
     text-align: center;
   }
 
-  .downloads-hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
-  .downloads-hero p { font-size: 17px; color: var(--text-muted); margin-bottom: 12px; }
+  .downloads-hero h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 14px; }
+  .downloads-hero p { font-size: 16px; color: var(--text-muted); margin-bottom: 12px; }
 
   .model-note {
     display: inline-block;
@@ -281,8 +297,8 @@
   .dl-card:hover { border-color: var(--blue); box-shadow: 0 4px 18px rgba(46, 127, 207, 0.12); }
 
   .dl-os-icon { font-size: 48px; margin-bottom: 16px; display: block; }
-  .dl-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .dl-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+  .dl-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .dl-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; }
 
   .dl-btn {
     display: block;
@@ -313,8 +329,8 @@
     box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
-  .model-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
-  .model-box p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 20px; }
+  .model-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .model-box p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 20px; }
 
   .model-btn {
     display: inline-block;
@@ -338,8 +354,8 @@
     text-align: center;
   }
 
-  .instructions-hero h1 { font-size: 42px; font-weight: 700; letter-spacing: -1px; margin-bottom: 16px; }
-  .instructions-hero p { font-size: 17px; color: var(--text-muted); }
+  .instructions-hero h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.6px; margin-bottom: 14px; }
+  .instructions-hero p { font-size: 16px; color: var(--text-muted); }
 
   .steps {
     max-width: 760px;
@@ -379,17 +395,17 @@
   }
 
   .step-content { flex: 1; }
-  .step-content h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; padding-top: 8px; }
-  .step-content p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+  .step-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; padding-top: 8px; }
+  .step-content p { font-size: 15px; color: var(--text-muted); line-height: 1.75; margin-bottom: 16px; }
 
   .step-visual {
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 20px 24px;
-    font-family: monospace;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
     font-size: 13px;
-    color: var(--blue-light);
+    color: var(--blue-dim);
     margin-top: 12px;
   }
 
@@ -406,7 +422,7 @@
     margin-top: 12px;
   }
 
-  .folder-tree .folder { color: var(--blue-light); }
+  .folder-tree .folder { color: var(--blue); }
   .folder-tree .file { color: var(--text-muted); }
   .folder-tree .flagged { color: #e05252; }
 
@@ -418,14 +434,14 @@
     font-size: 14px;
   }
 
-  footer a { color: var(--blue-light); text-decoration: none; }
+  footer a { color: var(--blue); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
   @media (max-width: 768px) {
     .benefits { grid-template-columns: 1fr; }
     .before-after { grid-template-columns: 1fr; }
     .download-cards { grid-template-columns: 1fr; }
-    .hero h1 { font-size: 36px; }
+    .hero h1 { font-size: 34px; letter-spacing: -0.5px; }
     nav { padding: 0 20px; }
     .nav-tab { padding: 8px 12px; font-size: 14px; }
   }
