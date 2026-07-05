@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><polygon points='22,2 40,12 40,32 22,42 4,32 4,12' fill='%231A5FA8'/><rect x='11' y='12' width='22' height='16' rx='2' fill='none' stroke='white' stroke-width='1.5'/><rect x='13' y='13.5' width='7' height='3' rx='1' fill='%234A9FE8'/><rect x='13' y='18.5' width='11' height='3' rx='1' fill='%234A9FE8'/></svg>">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'><polygon points='22,2 40,12 40,32 22,42 4,32 4,12' fill='%232e7fcf'/><rect x='11' y='12' width='22' height='16' rx='2' fill='none' stroke='white' stroke-width='1.5'/><rect x='13' y='13.5' width='7' height='3' rx='1' fill='%235ba8e8'/><rect x='13' y='18.5' width='11' height='3' rx='1' fill='%235ba8e8'/></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GridSift — DICOM Series Classifier</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --blue: #1A5FA8;
-    --blue-light: #4A9FE8;
-    --blue-dim: #0d3d6e;
-    --bg: #0a0f1a;
-    --bg2: #111827;
-    --bg3: #1a2235;
-    --text: #e8edf5;
-    --text-muted: #7a8ba8;
-    --border: #1e2d45;
+    --blue: #2e7fcf;
+    --blue-light: #5ba8e8;
+    --blue-dim: #1a5fa0;
+    --bg: #f2f6fb;
+    --bg2: #ffffff;
+    --bg3: #e6edf7;
+    --text: #18243a;
+    --text-muted: #6478a0;
+    --border: #cdd8ea;
   }
 
   body {
@@ -30,7 +30,7 @@
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    background: rgba(10, 15, 26, 0.95);
+    background: rgba(242, 246, 251, 0.96);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     z-index: 100;
@@ -56,8 +56,8 @@
     letter-spacing: -0.5px;
   }
 
-  .nav-logo-text span:first-child { color: #1A5FA8; }
-  .nav-logo-text span:last-child { color: #4A9FE8; }
+  .nav-logo-text span:first-child { color: #2e7fcf; }
+  .nav-logo-text span:last-child { color: #5ba8e8; }
 
   .nav-tabs { display: flex; gap: 4px; }
 
@@ -74,7 +74,7 @@
   }
 
   .nav-tab:hover { color: var(--text); background: var(--bg3); }
-  .nav-tab.active { color: var(--blue-light); background: rgba(74, 159, 232, 0.1); }
+  .nav-tab.active { color: var(--blue); background: rgba(46, 127, 207, 0.1); }
 
   .page { display: none; padding-top: 64px; min-height: 100vh; }
   .page.active { display: block; }
@@ -88,9 +88,9 @@
 
   .hero-badge {
     display: inline-block;
-    background: rgba(74, 159, 232, 0.1);
-    border: 1px solid rgba(74, 159, 232, 0.3);
-    color: var(--blue-light);
+    background: rgba(46, 127, 207, 0.08);
+    border: 1px solid rgba(46, 127, 207, 0.22);
+    color: var(--blue);
     font-size: 13px;
     padding: 6px 14px;
     border-radius: 20px;
@@ -177,12 +177,13 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 28px;
+    box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
   .benefit-icon {
     width: 44px;
     height: 44px;
-    background: rgba(26, 95, 168, 0.15);
+    background: rgba(46, 127, 207, 0.1);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -206,6 +207,7 @@
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 32px;
+    box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
   .ba-card.before { border-top: 3px solid #e05252; }
@@ -248,9 +250,9 @@
 
   .model-note {
     display: inline-block;
-    background: rgba(255, 193, 7, 0.08);
-    border: 1px solid rgba(255, 193, 7, 0.2);
-    color: #ffc107;
+    background: rgba(180, 120, 0, 0.07);
+    border: 1px solid rgba(180, 120, 0, 0.2);
+    color: #9a6600;
     font-size: 13px;
     padding: 8px 16px;
     border-radius: 8px;
@@ -272,10 +274,12 @@
     border-radius: 14px;
     padding: 36px 28px;
     text-align: center;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
-  .dl-card:hover { border-color: var(--blue); }
+  .dl-card:hover { border-color: var(--blue); box-shadow: 0 4px 18px rgba(46, 127, 207, 0.12); }
+
   .dl-os-icon { font-size: 48px; margin-bottom: 16px; display: block; }
   .dl-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
   .dl-card p { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
@@ -306,6 +310,7 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 36px;
+    box-shadow: 0 2px 10px rgba(30, 60, 110, 0.06);
   }
 
   .model-box h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
@@ -313,9 +318,9 @@
 
   .model-btn {
     display: inline-block;
-    background: rgba(74, 159, 232, 0.1);
-    border: 1px solid rgba(74, 159, 232, 0.3);
-    color: var(--blue-light);
+    background: rgba(46, 127, 207, 0.08);
+    border: 1px solid rgba(46, 127, 207, 0.25);
+    color: var(--blue);
     padding: 10px 22px;
     border-radius: 8px;
     text-decoration: none;
@@ -324,7 +329,7 @@
     transition: background 0.2s;
   }
 
-  .model-btn:hover { background: rgba(74, 159, 232, 0.2); }
+  .model-btn:hover { background: rgba(46, 127, 207, 0.15); }
 
   .instructions-hero {
     padding: 80px 40px 40px;
@@ -378,7 +383,7 @@
   .step-content p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
 
   .step-visual {
-    background: var(--bg2);
+    background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 20px 24px;
@@ -391,7 +396,7 @@
   .step-visual .comment { color: var(--text-muted); }
 
   .folder-tree {
-    background: var(--bg2);
+    background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 20px 24px;
@@ -431,14 +436,14 @@
 <nav>
   <a class="nav-logo" href="#" onclick="showPage('home')">
     <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="#1A5FA8"/>
+      <polygon points="22,2 40,12 40,32 22,42 4,32 4,12" fill="#2e7fcf"/>
       <rect x="11" y="12" width="22" height="16" rx="2" fill="none" stroke="white" stroke-width="1.5" opacity="0.9"/>
       <line x1="11" y1="17" x2="33" y2="17" stroke="white" stroke-width="1" opacity="0.5"/>
       <line x1="11" y1="22" x2="33" y2="22" stroke="white" stroke-width="1" opacity="0.5"/>
-      <rect x="13" y="13.5" width="7" height="3" rx="1" fill="#4A9FE8" opacity="0.9"/>
-      <rect x="22" y="13.5" width="9" height="3" rx="1" fill="#4A9FE8" opacity="0.6"/>
-      <rect x="13" y="18.5" width="11" height="3" rx="1" fill="#4A9FE8" opacity="0.9"/>
-      <rect x="26" y="18.5" width="5" height="3" rx="1" fill="#4A9FE8" opacity="0.6"/>
+      <rect x="13" y="13.5" width="7" height="3" rx="1" fill="#5ba8e8" opacity="0.9"/>
+      <rect x="22" y="13.5" width="9" height="3" rx="1" fill="#5ba8e8" opacity="0.6"/>
+      <rect x="13" y="18.5" width="11" height="3" rx="1" fill="#5ba8e8" opacity="0.9"/>
+      <rect x="26" y="18.5" width="5" height="3" rx="1" fill="#5ba8e8" opacity="0.6"/>
       <line x1="22" y1="28" x2="22" y2="36" stroke="white" stroke-width="1.5" opacity="0.8"/>
       <polygon points="22,38 19,34 25,34" fill="white" opacity="0.8"/>
     </svg>
