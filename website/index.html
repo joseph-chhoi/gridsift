@@ -94,18 +94,32 @@
     text-align: center;
   }
 
-  .hero-badge {
-    display: inline-block;
-    background: rgba(46, 127, 207, 0.08);
-    border: 1px solid rgba(46, 127, 207, 0.22);
-    color: var(--blue);
-    font-size: 12px;
+  .hero-tags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 36px;
+    font-size: 11px;
     font-weight: 500;
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-bottom: 32px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hero-tags span {
+    position: relative;
+  }
+
+  .hero-tags span:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 10px;
+    background: var(--border);
   }
 
   .hero h1 {
@@ -476,7 +490,11 @@
 <!-- HOME PAGE -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-badge">Free · Open Source · Runs Locally</div>
+    <div class="hero-tags">
+      <span>Free</span>
+      <span>Open Source</span>
+      <span>Runs Locally</span>
+    </div>
     <h1>Sort your DICOM files<br>in <span class="blue">minutes, not days</span></h1>
     <p>GridSift automatically classifies raw MRI series from any hospital export — T1, T2, FLAIR, DWI, DCE — and sorts them into labeled folders, ready for research.</p>
     <button class="hero-cta" onclick="showPage('downloads')">Download GridSift</button>
