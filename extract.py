@@ -10,11 +10,20 @@ def get_model_path():
         base_dir = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base_dir, "Llama-3.2-3B-Instruct-Q4_K_M.gguf")
 
-llm = Llama(
-    model_path=get_model_path(),
-    n_ctx=2048,
-    verbose=False
-)
+_llm = None
+
+def get_llm():
+    global _llm
+    if _llm is None:
+        model_path = get_model_path()
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(
+                f"Model file not found at: {model_path}\n"
+                f"Download Llama-3.2-3B-Instruct-Q4_K_M.gguf from HuggingFace "
+                f"and place it in the gridsift folder."
+            )
+        _llm = Llama(model_path=model_path, n_ctx=2048, verbose=False)
+    return _llm
 
 def normalize_with_rules(series_description):
     if not series_description:
@@ -43,7 +52,7 @@ DWI includes diffusion, DTI, ADC, and any sequence with DIFFUSION in the name.
 Respond with only the label, nothing else.<|eot_id|><|start_header_id|>user<|end_header_id|>
 Series: {truncated}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
 """
-    output = llm(prompt, max_tokens=10, stop=["<|eot_id|>", "\n"])
+    output = get_llm()(prompt, max_tokens=10, stop=["<|eot_id|>", "\n"])
     label = output["choices"][0]["text"].strip()
     if label not in ["T1", "T2", "FLAIR", "DWI", "DCE", "localizer", "unknown"]:
         return "unknown"
@@ -97,7 +106,10 @@ def classify_series(filepath):
     if label == "ambiguous":
         label = normalize_with_rules(meta["series_description"] or "")
         if label == "unknown":
-            label = normalize_with_llm(meta["series_description"] or "")
+            try:
+                label = normalize_with_llm(meta["series_description"] or "")
+            except FileNotFoundError:
+                label = "unknown"
         confidence = 0.6 if label != "unknown" else 0.0
 
     return {
@@ -121,10 +133,6 @@ if __name__ == "__main__":
     print(f"AX DIFFUSION: {normalize_with_rules('AX DIFFUSION')}")
     print(f"survey: {normalize_with_rules('survey')}")
     print(f"Coronal two-phase IV contrast: {normalize_with_rules('Coronal two-phase IV contrast fat suppressed; temp posn, stacks')}")
-
-    print("\nLLM normalization test (only for unknown cases):")
-    print(f"RESTING_STATE_Yerkes: {normalize_with_llm('RESTING_STATE_Yerkes')}")
-    print(f"CV_map_neuro_qT1_FA12nTI128: {normalize_with_llm('CV_map_neuro_qT1_FA12nTI128')}")
 
     print("\nFull pipeline test:")
     result = classify_series(r"C:\Users\Joseph Choi\Downloads\ct-pancreas-pancreas-ct-instance.dcm")

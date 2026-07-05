@@ -2,7 +2,7 @@ import sys
 import os
 import csv
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout,
+    QApplication, QMainWindow, QMessageBox, QWidget, QVBoxLayout,
     QHBoxLayout, QPushButton, QLabel, QFileDialog,
     QProgressBar, QTableWidget, QTableWidgetItem, QHeaderView
 )
@@ -66,6 +66,20 @@ class MainWindow(QMainWindow):
         self.folder_path = None
         self.output_folder = None
         self.setup_ui()
+
+        from extract import get_model_path
+        model_path = get_model_path()
+        if not os.path.exists(model_path):
+            from PyQt6.QtWidgets import QMessageBox
+            msg = QMessageBox()
+            msg.setWindowTitle("Model file missing")
+            msg.setText(
+                "GridSift requires the Llama 3.2 3B model file to run.\n\n"
+                "Download Llama-3.2-3B-Instruct-Q4_K_M.gguf from HuggingFace "
+                "and place it in the same folder as app.py.\n\n"
+                "See README.md for the download link."
+            ) 
+            msg.exec()
 
     def setup_ui(self):
         central = QWidget()
