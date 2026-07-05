@@ -513,29 +513,21 @@
     <div class="model-note">⚠️ After downloading, place the Llama 3.2 3B model file inside the GridSift folder before running.</div>
   </div>
 
-  <div class="download-cards">
-    <div class="dl-card">
-      <span class="dl-os-icon">🪟</span>
-      <h3>Windows</h3>
-      <p>Windows 10 or later. Extract the zip and run GridSift.exe.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Windows.zip">Download for Windows</a>
-      <div class="dl-version">v1.0.4 · 53 MB</div>
-    </div>
-    <div class="dl-card">
-      <span class="dl-os-icon">🍎</span>
-      <h3>macOS</h3>
-      <p>macOS 11 or later. Extract the zip and open the GridSift app.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Mac.zip">Download for macOS</a>
-      <div class="dl-version">v1.0.4 · 78 MB</div>
-    </div>
-    <div class="dl-card">
-      <span class="dl-os-icon">🐧</span>
-      <h3>Linux</h3>
-      <p>Ubuntu 20.04 or later. Extract the zip and run the GridSift binary.</p>
-      <a class="dl-btn" href="https://github.com/joseph-chhoi/gridsift/releases/download/v1.0.4/GridSift-Linux.zip">Download for Linux</a>
-      <div class="dl-version">v1.0.4 · 124 MB</div>
+  <div class="install-section" style="max-width:700px;margin:48px auto;padding:0 40px;">
+  <div class="model-box">
+    <h3>Install GridSift</h3>
+    <p>Requires Python 3.9 or later. Runs on Windows, macOS, and Linux.</p>
+    <div class="step-visual" style="margin-top:16px;">
+      <div class="comment"># Clone the repository</div>
+      <div>git clone https://github.com/joseph-chhoi/gridsift.git</div>
+      <div>cd gridsift</div>
+      <div style="margin-top:8px;" class="comment"># Install dependencies</div>
+      <div>pip install pydicom PyQt6 llama-cpp-python</div>
+      <div style="margin-top:8px;" class="comment"># Run the app</div>
+      <div>python app.py</div>
     </div>
   </div>
+</div>
 
   <div class="model-section">
     <div class="model-box">
